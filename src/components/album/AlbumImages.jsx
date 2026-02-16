@@ -15,6 +15,7 @@ import axiosInstance from "../../utils/axios";
 import favoriteImg from "../images/favorite.png";
 import unFavoriteImg from "../images/unfavorite.png";
 import { loadingToast, toastSuccess, toastError } from "../../utils/toast";
+import usePhotosContext from "../../context/photosContext";
 
 const AlbumImages = ({ albumImages, album }) => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -22,9 +23,21 @@ const AlbumImages = ({ albumImages, album }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
   const [fevtImages, setFevtImgs] = useState([]);
+  const { searchText } = usePhotosContext();
   const revalidator = useRevalidator();
   let filteredImages =
     searchParams.get("fetch") === "favorite" ? fevtImages : albumImages;
+
+  filteredImages = searchText.length !== 0 
+    ? filteredImages.filter((image) =>
+        image.tags.some((tag) =>
+          tag.toLowerCase().includes(searchText.toLowerCase()),
+        ),
+      )
+    : filteredImages;
+
+  console.log(filteredImages);
+
   const { status } = useSelector((state) => state.album);
   const dispatch = useDispatch();
   const navigate = useNavigate();

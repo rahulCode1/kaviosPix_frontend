@@ -1,4 +1,4 @@
-import { createContext, useContext, useState,  } from "react";
+import { createContext, useContext, useState } from "react";
 
 const PhotosContext = createContext();
 
@@ -13,7 +13,7 @@ export const PhotosProvider = ({ children }) => {
   };
 
   const [user, setUser] = useState(initialValue);
-
+  const [searchText, setSearchText] = useState("");
 
   const handleLogout = (navigate) => {
     localStorage.removeItem("token");
@@ -22,13 +22,13 @@ export const PhotosProvider = ({ children }) => {
     navigate("/login");
   };
 
-
-
   return (
     <PhotosContext.Provider
       value={{
         user,
         setUser,
+        searchText,
+        setSearchText,
         handleLogout,
       }}
     >

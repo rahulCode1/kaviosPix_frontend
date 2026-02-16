@@ -14,7 +14,7 @@ import AlbumImagesPage, { loader as albumImagesLoader } from './pages/album/Albu
 import ImageDetailsPage, { loader as imageDetailsLoader } from './pages/image/ImageDetailsPage';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import ErrorPage from './components/Error/Error';
-
+import AlbumLayout from './components/layout/AlbumLayout';
 
 const router = createBrowserRouter([
   {
@@ -46,8 +46,16 @@ const router = createBrowserRouter([
           },
           {
             path: ":albumId",
-            element: <AlbumImagesPage />,
-            loader: albumImagesLoader
+          
+            element: <AlbumLayout />,
+            children: [
+              {
+                index: true,
+                element: <AlbumImagesPage />,
+                  loader: albumImagesLoader,
+
+              }
+            ]
           }
         ]
       },

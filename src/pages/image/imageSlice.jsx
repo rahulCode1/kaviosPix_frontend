@@ -12,7 +12,7 @@ export const addImageAsync = createAsyncThunk(
       formData.append("albumId", entries.albumId);
       formData.append("name", entries.name);
       formData.append("person", entries.person);
-      entries.tags.forEach((tag) => formData.append("tags", tag));
+      formData.append("tags", entries.tags)
       formData.append("image", entries.imageFile);
 
       const response = await axiosInstance.post(
@@ -25,12 +25,17 @@ export const addImageAsync = createAsyncThunk(
         },
       );
 
+      // console.log(response)
+
       toastSuccess(
         toastId,
         response.data?.message || "Image added successfully",
       );
       return response.data;
     } catch (error) {
+
+      console.log(error)
+
       toastError(
         toastId,
         error.response?.data?.message || "Failed to add new image.",

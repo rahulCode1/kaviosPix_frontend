@@ -66,16 +66,18 @@ const AddImage = () => {
       albumId: imageData.albumId,
       name: imageData.name,
       person: imageData.person,
-      tags: imageData.tags.split(",").map((tag) => tag.trim()),
+      tags: imageData.tags,
       imageFile,
     };
+
+  
 
     try {
       await dispatch(addImageAsync(formData)).unwrap();
 
-      setImageData(initialValue);
-      fileRef.current.value = "";
-      setImageFile("");
+      // setImageData(initialValue);
+      // fileRef.current.value = "";
+      // setImageFile("");
     } catch (error) {
       console.log(error);
     }
