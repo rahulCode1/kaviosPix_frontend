@@ -7,15 +7,15 @@ const Header = () => {
   const userId = localStorage.getItem("userId");
   const navigate = useNavigate();
 
-  
-
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
-        <div className="container-fluid">
+        <div className="container-fluid px-5">
+          {/* Logo Left */}
           <NavLink className="navbar-brand" to="/albums">
             kaviosPix
           </NavLink>
+
           <button
             className="navbar-toggler"
             type="button"
@@ -27,8 +27,10 @@ const Header = () => {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
+
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            {/* Move items to right using ms-auto */}
+            <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
               {token && userId && (
                 <li className="nav-item">
                   <NavLink className="nav-link" to="/albums">
@@ -36,6 +38,7 @@ const Header = () => {
                   </NavLink>
                 </li>
               )}
+
               {token && userId && (
                 <li className="nav-item">
                   <NavLink className="nav-link" to="/albums/add">
@@ -43,6 +46,7 @@ const Header = () => {
                   </NavLink>
                 </li>
               )}
+
               {token && userId && (
                 <li className="nav-item">
                   <NavLink className="nav-link" to="/image">
@@ -50,29 +54,27 @@ const Header = () => {
                   </NavLink>
                 </li>
               )}
+
               {!token && !userId && (
                 <li className="nav-item">
-                  <NavLink
-                    className="nav-link active"
-                    aria-current="page"
-                    to="/login"
-                  >
+                  <NavLink className="nav-link" to="/login">
                     Login
                   </NavLink>
                 </li>
               )}
+
               {token && userId && (
                 <li className="nav-item">
                   <button
                     onClick={() => handleLogout(navigate)}
-                    className="nav-link active"
+                    className="nav-link btn btn-link"
+                    style={{ textDecoration: "none" }}
                   >
                     Logout
                   </button>
                 </li>
               )}
             </ul>
-           
           </div>
         </div>
       </nav>
