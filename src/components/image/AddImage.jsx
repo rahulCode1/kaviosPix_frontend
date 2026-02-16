@@ -75,9 +75,9 @@ const AddImage = () => {
     try {
       await dispatch(addImageAsync(formData)).unwrap();
 
-      // setImageData(initialValue);
-      // fileRef.current.value = "";
-      // setImageFile("");
+      setImageData(initialValue);
+      fileRef.current.value = "";
+      setImageFile("");
     } catch (error) {
       console.log(error);
     }
