@@ -8,13 +8,14 @@ import {
   useRevalidator,
   Link,
   useSearchParams,
+  useLocation,
 } from "react-router";
 import Model from "../model/Model";
 import { useState } from "react";
 import axiosInstance from "../../utils/axios";
 import favoriteImg from "../images/favorite.png";
 import unFavoriteImg from "../images/unfavorite.png";
-import { loadingToast, toastSuccess, toastError } from "../../utils/toast";
+import { loadingToast, toastSuccess, toastError , toastAlert} from "../../utils/toast";
 import usePhotosContext from "../../context/photosContext";
 
 const AlbumImages = ({ albumImages, album }) => {
@@ -28,15 +29,14 @@ const AlbumImages = ({ albumImages, album }) => {
   let filteredImages =
     searchParams.get("fetch") === "favorite" ? fevtImages : albumImages;
 
-  filteredImages = searchText.length !== 0 
-    ? filteredImages.filter((image) =>
-        image.tags.some((tag) =>
-          tag.toLowerCase().includes(searchText.toLowerCase()),
-        ),
-      )
-    : filteredImages;
-
-
+  filteredImages =
+    searchText.length !== 0
+      ? filteredImages.filter((image) =>
+          image.tags.some((tag) =>
+            tag.toLowerCase().includes(searchText.toLowerCase()),
+          ),
+        )
+      : filteredImages;
 
   const { status } = useSelector((state) => state.album);
   const dispatch = useDispatch();
@@ -142,6 +142,19 @@ const AlbumImages = ({ albumImages, album }) => {
     }
   };
 
+  const location = useLocation();
+
+  const handleCopy = async () => {
+    const url = window.location.origin + location.pathname;
+
+    try {
+      await navigator.clipboard.writeText(url);
+      toastAlert("Link copied successfully!");
+    } catch (error) {
+      toastAlert("Failed to copy");
+    }
+  };
+
   return (
     <main className="container py-4">
       {isModalOpen && (
@@ -229,6 +242,11 @@ const AlbumImages = ({ albumImages, album }) => {
                 disabled={status === "Loading"}
               >
                 Delete album
+              </button>
+            </li>
+            <li>
+              <button onClick={handleCopy} className="dropdown-item">
+                Copy Album Url
               </button>
             </li>
           </ul>
