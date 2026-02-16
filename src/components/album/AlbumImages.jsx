@@ -36,7 +36,7 @@ const AlbumImages = ({ albumImages, album }) => {
       )
     : filteredImages;
 
-  console.log(filteredImages);
+
 
   const { status } = useSelector((state) => state.album);
   const dispatch = useDispatch();
