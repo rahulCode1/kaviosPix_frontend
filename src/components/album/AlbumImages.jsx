@@ -5,13 +5,13 @@ import {
 } from "../../pages/album/albumSlice";
 import {
   useNavigate,
-  Form,
+ 
   useRevalidator,
   Link,
   useSearchParams,
 } from "react-router";
 import Model from "../model/Model";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import axiosInstance from "../../utils/axios";
 import favoriteImg from "../images/favorite.png";
 import unFavoriteImg from "../images/unfavorite.png";
@@ -29,7 +29,6 @@ const AlbumImages = ({ albumImages, album }) => {
   const { status } = useSelector((state) => state.album);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
 
   const handleDeleteAlbum = async (albumId) => {
     try {
@@ -244,6 +243,7 @@ const AlbumImages = ({ albumImages, album }) => {
                       src={image.imageUrl}
                       className="card-img"
                       style={{ objectFit: "cover" }}
+                      alt={image.name}
                     />
                   </Link>
                 </div>
@@ -258,9 +258,7 @@ const AlbumImages = ({ albumImages, album }) => {
                   >
                     {image.name}
                   </p>
-                  {/* <p className="">
-                    Tags: {image?.tags.map((tag) => tag).join(",")}
-                  </p> */}
+                 
                   <button
                     className=" btn"
                     style={{ position: "absolute", top: "0", right: "0" }}

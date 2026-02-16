@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Form, Link, useNavigate } from "react-router";
+import {  Link, useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchAlbumAsync,
@@ -22,9 +22,7 @@ const Album = () => {
   const [album, setAlbum] = useState(initialAlbum);
 
   const token = localStorage.getItem("token");
-  const userId = localStorage.getItem("userId");
-
-  // console.log(user)
+ 
 
   const { albums, status, error } = useSelector((state) => state.album);
   const navigate = useNavigate();
@@ -46,10 +44,10 @@ const Album = () => {
           },
         );
 
-        // console.log(response);
+      
         setUser(response.data?.user);
         localStorage.setItem("userId", response.data?.user.id);
-      } catch (err) {
+      } catch (error) {
         console.log(error);
       }
     };
@@ -65,7 +63,7 @@ const Album = () => {
     };
 
     fetchAlbums();
-  }, []);
+  }, [dispatch]);
 
   const handleModalToggle = (album) => {
     setAlbum(album);

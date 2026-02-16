@@ -1,7 +1,6 @@
 import {
   Form,
   Link,
-  useLocation,
   useNavigate,
   useRevalidator,
 } from "react-router";
@@ -97,6 +96,7 @@ const ImageDetails = ({ imageDetails, albumDetails }) => {
           src={imageDetails.imageUrl}
           className="img img-fluid rounded shadow my-3"
           style={{ objectFit: "cover" }}
+          alt={imageDetails.name}
         />
 
         <div className="py-3  px-4 shadow rounded">

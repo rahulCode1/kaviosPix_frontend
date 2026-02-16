@@ -15,13 +15,13 @@ const AddImage = () => {
   const [imageData, setImageData] = useState(initialValue);
   const [imageFile, setImageFile] = useState("");
   const { albums } = useSelector((state) => state.album);
-  const { images, status, error } = useSelector((state) => state.image);
+  const {  status } = useSelector((state) => state.image);
   const fileRef = useRef();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchAlbumAsync());
-  }, []);
+  }, [dispatch]);
 
   const handleOnSelectFile = (e) => {
     const file = e.target.files[0];
