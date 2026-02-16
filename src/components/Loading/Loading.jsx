@@ -1,23 +1,11 @@
-import { Oval } from "react-loader-spinner";
-
 const Loading = () => {
   return (
-    <div
-      style={{
-        width: "100vw",
-        height: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <Oval
-        visible={true}
-        height="80"
-        width="80"
-        color="#4fa94d"
-        ariaLabel="oval-loading"
-      />
+    <div className="position-fixed top-0 start-0 w-100 vh-100 d-flex justify-content-center align-items-center bg-dark bg-opacity-50">
+      <div
+        className="spinner-border text-light"
+        style={{ width: "4rem", height: "4rem" }}
+        role="status"
+      ></div>
     </div>
   );
 };
