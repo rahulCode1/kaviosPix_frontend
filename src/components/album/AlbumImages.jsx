@@ -5,13 +5,12 @@ import {
 } from "../../pages/album/albumSlice";
 import {
   useNavigate,
- 
   useRevalidator,
   Link,
   useSearchParams,
 } from "react-router";
 import Model from "../model/Model";
-import {  useState } from "react";
+import { useState } from "react";
 import axiosInstance from "../../utils/axios";
 import favoriteImg from "../images/favorite.png";
 import unFavoriteImg from "../images/unfavorite.png";
@@ -258,7 +257,7 @@ const AlbumImages = ({ albumImages, album }) => {
                   >
                     {image.name}
                   </p>
-                 
+
                   <button
                     className=" btn"
                     style={{ position: "absolute", top: "0", right: "0" }}
@@ -268,9 +267,17 @@ const AlbumImages = ({ albumImages, album }) => {
                     disabled={isLoading}
                   >
                     {image.isFavorite ? (
-                      <img src={unFavoriteImg} style={{ width: "25px" }} />
+                      <img
+                        src={unFavoriteImg}
+                        style={{ width: "25px" }}
+                        alt="Add to favorite"
+                      />
                     ) : (
-                      <img src={favoriteImg} style={{ width: "25px" }} />
+                      <img
+                        src={favoriteImg}
+                        style={{ width: "25px" }}
+                        alt="Remove from favorite"
+                      />
                     )}
                   </button>
                 </div>

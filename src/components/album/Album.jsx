@@ -24,7 +24,7 @@ const Album = () => {
   const token = localStorage.getItem("token");
  
 
-  const { albums, status, error } = useSelector((state) => state.album);
+  const { albums, status } = useSelector((state) => state.album);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -55,7 +55,7 @@ const Album = () => {
     if (token) {
       validateUserLogin();
     }
-  }, [token, navigate]);
+  }, [token, navigate, setUser]);
 
   useEffect(() => {
     const fetchAlbums = () => {
