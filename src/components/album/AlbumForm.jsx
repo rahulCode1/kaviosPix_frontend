@@ -1,12 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Form, useNavigate } from "react-router";
+import { Form, useNavigate, Link } from "react-router";
 import { addAlbumAsync } from "../../pages/album/albumSlice";
 
 const AlbumForm = () => {
-  const {  status } = useSelector((state) => state.album);
+  const { status } = useSelector((state) => state.album);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
 
   const handleAddAlbum = async (e) => {
     e.preventDefault();
@@ -25,8 +24,13 @@ const AlbumForm = () => {
 
   return (
     <main className="container py-5">
+      <div className="d-flex align-items-center justify-content-between my-3">
+        <Link to="/albums" className="btn btn-light border shadow-sm me-3">
+          ← Back
+        </Link>
 
-      <h1>Create new Album </h1>
+        <h1>Create new Album </h1>
+      </div>
       <Form onSubmit={handleAddAlbum}>
         <div>
           <label htmlFor="name" className="form-label">
@@ -37,7 +41,8 @@ const AlbumForm = () => {
             id="name"
             name="name"
             className="form-control"
-            // required
+            required
+            placeholder="Enter album name"
           />
         </div>
         <div>
@@ -49,6 +54,7 @@ const AlbumForm = () => {
             id="description"
             name="description"
             rows={3}
+            placeholder="Enter album description"
             className="form-control"
           />
         </div>
@@ -58,7 +64,13 @@ const AlbumForm = () => {
           className="btn mt-3 btn-primary"
           type="submit"
         >
-          {status === "Loading" ? "Adding new album..." : "Add Album"}
+          {status === "Loading" ? "Submitting..." : "Add new album"}
+          {status === "Loading" && (
+            <span
+              className="spinner-border spinner-border-sm ms-2"
+              role="status"
+            ></span>
+          )}
         </button>
       </Form>
     </main>

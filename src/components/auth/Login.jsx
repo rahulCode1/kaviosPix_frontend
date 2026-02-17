@@ -7,7 +7,7 @@ const Login = () => {
 
   return (
     <div
-      className="d-flex justify-content-center align-items-center"
+      className="d-flex justify-content-center align-items-center container container-fluid"
       style={{
         minHeight: "100vh",
         background: "linear-gradient(135deg, #f8f9fa, #e9ecef)",

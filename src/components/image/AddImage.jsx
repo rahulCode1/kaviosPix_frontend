@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Form } from "react-router";
+import { Form, Link } from "react-router";
 import { fetchAlbumAsync } from "../../pages/album/albumSlice";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
@@ -15,7 +15,7 @@ const AddImage = () => {
   const [imageData, setImageData] = useState(initialValue);
   const [imageFile, setImageFile] = useState("");
   const { albums } = useSelector((state) => state.album);
-  const {  status } = useSelector((state) => state.image);
+  const { status } = useSelector((state) => state.image);
   const fileRef = useRef();
   const dispatch = useDispatch();
 
@@ -70,8 +70,6 @@ const AddImage = () => {
       imageFile,
     };
 
-  
-
     try {
       await dispatch(addImageAsync(formData)).unwrap();
 
@@ -85,7 +83,13 @@ const AddImage = () => {
 
   return (
     <main className="container py-5 container-fluid">
-      <h1 className="py-3">Add new Image </h1>
+      <div className="d-flex align-items-center justify-content-between my-3">
+        <Link to="/albums" className="btn btn-light border shadow-sm me-3">
+          ← Back
+        </Link>
+
+        <h1>Add new image </h1>
+      </div>
       <Form onSubmit={handleAddImage}>
         <div>
           <label htmlFor="albumId" className="form-label">
@@ -176,7 +180,13 @@ const AddImage = () => {
           type="submit"
           disabled={status === "Loading"}
         >
-          Add Image
+          {status === "Loading" ? "Submitting..." : "Add Image"}
+          {status === "Loading" && (
+            <span
+              className="spinner-border spinner-border-sm ms-2"
+              role="status"
+            ></span>
+          )}
         </button>
       </Form>
     </main>

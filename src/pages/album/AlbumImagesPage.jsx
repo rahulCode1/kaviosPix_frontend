@@ -16,6 +16,7 @@ const AlbumImagesPage = () => {
           <AlbumImages
             albumImages={isAlbumLoad.images}
             album={isAlbumLoad.album}
+            users={isAlbumLoad.users}
           />
         )}
       </Await>

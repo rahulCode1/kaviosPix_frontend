@@ -10,7 +10,7 @@ const Header = () => {
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
-        <div className="container-fluid px-5">
+        <div className="container-fluid md-px-5">
           {/* Logo Left */}
           <NavLink className="navbar-brand" to="/albums">
             kaviosPix

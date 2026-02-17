@@ -15,10 +15,15 @@ import { useState } from "react";
 import axiosInstance from "../../utils/axios";
 import favoriteImg from "../images/favorite.png";
 import unFavoriteImg from "../images/unfavorite.png";
-import { loadingToast, toastSuccess, toastError , toastAlert} from "../../utils/toast";
+import {
+  loadingToast,
+  toastSuccess,
+  toastError,
+  toastAlert,
+} from "../../utils/toast";
 import usePhotosContext from "../../context/photosContext";
 
-const AlbumImages = ({ albumImages, album }) => {
+const AlbumImages = ({ albumImages, album, users }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [emails, setEmails] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
@@ -156,7 +161,7 @@ const AlbumImages = ({ albumImages, album }) => {
   };
 
   return (
-    <main className="container py-4">
+    <main className="md-container py-4">
       {isModalOpen && (
         <Model
           onclose={() => setModalOpen((prevStat) => !prevStat)}
@@ -170,13 +175,20 @@ const AlbumImages = ({ albumImages, album }) => {
               <label htmlFor="emails" className="form-label">
                 Add Emails:
               </label>
-              <textarea
-                id="emails"
-                name="emails"
+
+              <select
+                className="form-select"
                 onChange={handleOnChangeEmails}
-                required
-                className="form-control"
-              />
+                name="emails"
+                id="emails"
+              >
+                <option value="" disabled selected>
+                  Select User
+                </option>
+                {users.map((user) => (
+                  <option value={user.email}>{user.email}</option>
+                ))}
+              </select>
             </div>
           </form>
         </Model>
@@ -186,14 +198,7 @@ const AlbumImages = ({ albumImages, album }) => {
       <div className="d-flex  align-items-center justify-content-between mb-4">
         {/* LEFT SIDE */}
         <div className="">
-          <Link
-            to="/albums"
-            className="btn btn-light border shadow-sm me-3"
-            style={{
-              borderRadius: "8px",
-              padding: "6px 14px",
-            }}
-          >
+          <Link to="/albums" className="btn btn-light border shadow-sm me-3">
             ← Back
           </Link>
         </div>
@@ -259,60 +264,76 @@ const AlbumImages = ({ albumImages, album }) => {
         </h2>
       </div>
 
-      <div className="row py-4">
+      <div
+        className="py-4"
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr)",
+          gap: "5px",
+          alignItems: "center",
+        }}
+      >
         {filteredImages && filteredImages.length !== 0 ? (
           filteredImages.map((image) => (
-            <div key={image.id} className="col-md-4">
-              <div className="card mb-3 " style={{ position: "relative" }}>
-                <div>
-                  <Link
-                    to={`/image/${image.id}?albumId=${album.id}`}
-                    state={{ from: `/albums/${album.id}` }}
-                  >
-                    <img
-                      src={image.imageUrl}
-                      className="card-img"
-                      style={{ objectFit: "cover" }}
-                      alt={image.name}
-                    />
-                  </Link>
-                </div>
-                <div className="card-body p-0">
-                  <p
-                    style={{
-                      position: "absolute",
-                      left: "10px",
-                      bottom: "0",
-                    }}
-                    className="text-light"
-                  >
-                    {image.name}
-                  </p>
+            <div key={image.id} style={{ position: "relative" }}>
+              <Link
+                to={`/image/${image.id}?albumId=${album.id}`}
+                state={{ from: `/albums/${album.id}` }}
+              >
+                <img
+                  src={image.imageUrl}
+                  className=" img-fluid rounded shadow"
+                  style={{
+                    objectFit: "cover",
 
-                  <button
-                    className=" btn"
-                    style={{ position: "absolute", top: "0", right: "0" }}
-                    onClick={() =>
-                      handleMarkOrUnmarkFavorite(image.id, image.isFavorite)
-                    }
-                    disabled={isLoading}
-                  >
-                    {image.isFavorite ? (
-                      <img
-                        src={unFavoriteImg}
-                        style={{ width: "25px" }}
-                        alt="Add to favorite"
-                      />
-                    ) : (
-                      <img
-                        src={favoriteImg}
-                        style={{ width: "25px" }}
-                        alt="Remove from favorite"
-                      />
-                    )}
-                  </button>
-                </div>
-              </div>
+                    width: "100%",
+                    height: "300px",
+                  }}
+                  alt={image.name}
+                />
+              </Link>
+
+              <p
+                style={{
+                  position: "absolute",
+                  left: "10px",
+                  bottom: "0",
+                }}
+                className="text-light"
+              >
+                {image.name}
+              </p>
+
+              <button
+                className=" btn "
+                style={{
+                  position: "absolute",
+                  top: "5px",
+                  right: "5px",
+                  background: "rgba(255,255,255,0.8)",
+                  padding: "6px",
+                  borderRadius: "50%",
+                  cursor: "pointer",
+                }}
+                onClick={() =>
+                  handleMarkOrUnmarkFavorite(image.id, image.isFavorite)
+                }
+                disabled={isLoading}
+              >
+                {image.isFavorite ? (
+                  <img
+                    src={unFavoriteImg}
+                    style={{ width: "25px" }}
+                    alt="Add to favorite"
+                  />
+                ) : (
+                  <img
+                    src={favoriteImg}
+                    style={{ width: "25px" }}
+                    alt="Remove from favorite"
+                  />
+                )}
+              </button>
             </div>
           ))
         ) : (
